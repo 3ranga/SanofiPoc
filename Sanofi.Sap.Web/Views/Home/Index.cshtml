@@ -1,0 +1,47 @@
+﻿<div class="jumbotron">
+    <h1>Workflow POC</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h2>All Requests</h2>
+        <table class="table" id="requests">
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Requester
+                </th>
+                <th>
+                    Message
+                </th>
+                <th>
+                    Status
+                </th>
+                <th></th>
+            </tr>
+        </table>
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.get('/api/requests', function (data, status) {
+                $.each(data, function (i, item) {
+                    var newLink = $("<a />", {
+                        href: '/Home/Review/' + item.Id,
+                        text: item.Id
+                    });
+                    var $tr = $('<tr>').append(
+                        $('<td>').append(newLink),
+                        $('<td>').text(item.Requester),
+                        $('<td>').text(item.Message),
+                        $('<td>').text(item.Status)
+                    ).appendTo('#requests');
+                });
+            });
+        });
+    </script>
+}

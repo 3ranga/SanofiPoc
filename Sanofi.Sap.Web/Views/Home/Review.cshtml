@@ -1,0 +1,118 @@
+﻿@model Sanofi.Sap.Requests.Request
+
+@{
+    ViewBag.Title = "Review";
+}
+
+<h2>Review</h2>
+
+<div>
+    <h4>Request</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Requester)
+        </dt>
+
+        <dd id="requester">
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Message)
+        </dt>
+
+        <dd id="message">
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd id="status">
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedOn)
+        </dt>
+
+        <dd id="updatedOn">
+        </dd>
+    </dl>
+    <button type="button" class="btn" id="request">Request Approval</button>
+    <button type="button" class="btn btn-success" id="approve">Approve</button>
+    <button type="button" class="btn btn-danger" id="reject">Reject</button>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var index = window.location.href.lastIndexOf('/');
+            var requestId = window.location.href.substr(index + 1);
+            getDetails(requestId);
+
+            var requestBody = { id: requestId };
+            $('#approve').click(function() {
+                $.ajax({
+                    url: '/api/requests/approve',
+                    type: 'POST',
+                    data: JSON.stringify(requestBody),
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        getDetails(requestId);
+                        alert('Request approved.');
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Status: ' + status + ' Error: ' + error);
+                    }
+                });
+            });
+
+            $('#reject').click(function () {
+                $.ajax({
+                    url: '/api/requests/reject',
+                    type: 'POST',
+                    data: JSON.stringify(requestBody),
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        getDetails(requestId);
+                        alert('Request rejected.');
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Status: ' + status + ' Error: ' + error);
+                    }
+                });
+            });
+
+            $('#request').click(function () {
+                $.ajax({
+                    url: '/api/requests/requestApproval',
+                    type: 'POST',
+                    data: JSON.stringify(requestBody),
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        getDetails(requestId);
+                        alert('Approval requested.');
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Status: ' + status + ' Error: ' + error);
+                    }
+                });
+            });
+        });
+
+        function getDetails(requestId) {
+            $.get('/api/requests/' + requestId, function (data, status) {
+                $('#requester').text(data.Requester);
+                $('#message').text(data.Message);
+                $('#status').text(data.Status);
+                $('#updatedOn').text(data.UpdatedOn);
+            });
+        }
+    </script>
+}
