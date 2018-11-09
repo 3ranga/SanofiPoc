@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { Grid, Button, ButtonToolbar  } from 'react-bootstrap';
 import RequestService from './Services/RequestService';
-import './App.css';
 import Menubar from './Menubar';
 import Header from './Header';
 import Footer from './Footer';
@@ -45,17 +45,22 @@ class ViewRequest extends Component {
     const { request } = this.state;
     if (request) {
       return (
-        <div className="App">
+        <Grid>
         <Header/>
         <Menubar/>
         <div>Requester: {request.Requester}</div>
         <div>Message: {request.Message}</div>
         <div>Status: {request.Status}</div>
-        <input type="button" value="Request Approval" onClick={this.handleRequestApprovalClick}/>
-        <input type="button" value="Approve" onClick={this.handleApproveClick}/>
-        <input type="button" value="Reject" onClick={this.handleRejectClick}/>
+        <ButtonToolbar>
+    <Button onClick={this.handleRequestApprovalClick}>
+    Request Approval
+    </Button>
+    <Button bsStyle="primary" onClick={this.handleApproveClick}>Approve</Button>
+    <Button bsStyle="danger" onClick={this.handleRejectClick}>Reject</Button>
+  </ButtonToolbar>
+
         <Footer/>        
-        </div>
+        </Grid>
       );
     }
 

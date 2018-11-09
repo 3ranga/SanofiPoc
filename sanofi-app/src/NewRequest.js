@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { Grid, FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
 import RequestService from './Services/RequestService';
-import './App.css';
 import Menubar from './Menubar';
 import Header from './Header';
 import Footer from './Footer';
@@ -32,22 +32,34 @@ class NewRequest extends Component {
 
   render() {
     return (
-        <div className="App">
+        <Grid>
         <Header/>
         <Menubar/>
         <form onSubmit={this.handleSubmit}>
-        <label>
-          Requester:
-          <input type="text" value={this.state.requester} onChange={this.handleRequesterChange} />
-        </label>                
-        <label>
-          Message:
-          <input type="text" value={this.state.message} onChange={this.handleMessageChange} />
-        </label>        
-        <input type="submit" value="Submit" />
+        <FormGroup>
+          <ControlLabel>Requester</ControlLabel>
+          <FormControl
+            type="text"
+            value={this.state.requester}
+            placeholder="Enter text"
+            onChange={this.handleRequesterChange}
+          />
+          <FormControl.Feedback />
+        </FormGroup>
+        <FormGroup>
+          <ControlLabel>Message</ControlLabel>
+          <FormControl
+            type="text"
+            value={this.state.message}
+            placeholder="Enter text"
+            onChange={this.handleMessageChange}
+          />
+          <FormControl.Feedback />
+        </FormGroup>                       
+        <Button type="submit">Submit</Button>
       </form>
         <Footer/>
-      </div>
+      </Grid>
     );
   }
 }

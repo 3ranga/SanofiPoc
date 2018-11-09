@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { Row, Table } from 'react-bootstrap';
 import RequestService from './Services/RequestService';
 import './App.css';
 
@@ -19,8 +20,8 @@ class RequestList extends Component {
     const { requests } = this.state;
     if (requests) {
       return (
-        <div>
-          <table>
+        <Row>
+          <Table striped bordered condensed hover>
             <thead>
             <tr>
               <th>Id</th>
@@ -39,8 +40,8 @@ class RequestList extends Component {
               </tr>))        
             } 
             </tbody>
-          </table>
-        </div>
+          </Table>
+        </Row>
       );
     }
 

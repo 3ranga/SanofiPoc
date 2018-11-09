@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import { Grid } from 'react-bootstrap';
 import Menubar from './Menubar';
 import RequestList from './RequestList';
 import Header from './Header';
@@ -8,12 +8,12 @@ import Footer from './Footer';
 class Dashboard extends Component {
   render() {
     return (
-        <div className="App">
+        <Grid>
         <Header/>
         <Menubar/>
         <RequestList/>
         <Footer/>
-      </div>
+      </Grid>
     );
   }
 }
